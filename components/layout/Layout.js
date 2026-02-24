@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 function Layout({ children }) {
   return (
@@ -7,9 +8,18 @@ function Layout({ children }) {
         <div className="container-custom"> 
           <div className="flex justify-between items-center py-4">
             <Link href="/">
-              <h1 className="text-2xl md:text-3xl font-display font-bold text-gradient cursor-pointer hover:scale-105 transition-transform duration-200">
-                Smith Marketing Agency
-              </h1>
+              <div className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform duration-200">
+                <Image 
+                  src="/smith-logo.png" 
+                  alt="Smith Marketing Agency Logo" 
+                  width={48} 
+                  height={48}
+                  className="rounded-lg"
+                />
+                <h1 className="text-2xl md:text-3xl font-display font-bold text-gradient">
+                  Smith Marketing Agency
+                </h1>
+              </div>
             </Link>
             <Link href="/add-customer">
               <button className="btn btn-primary flex items-center gap-2">
