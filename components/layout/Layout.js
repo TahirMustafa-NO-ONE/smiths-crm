@@ -23,7 +23,7 @@ function Layout({ children }) {
         </div>
       </header>
       
-      <main className="flex-1 container-custom py-8">
+      <main className="flex-1 container-custom py-6">
         {children}
       </main>
       

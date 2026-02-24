@@ -26,7 +26,7 @@ function CustomerDetailsPage({ data }) {
   };
   
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8 animate-fade-in">
+    <div className="py-6 animate-fade-in">
       <div className="card">
         <div className="flex items-start justify-between mb-6">
           <div>

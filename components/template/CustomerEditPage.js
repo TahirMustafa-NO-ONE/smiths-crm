@@ -35,7 +35,7 @@ function CustomerEditPage({ data, id }) {
   };
   
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8 animate-fade-in">
+    <div className="py-6 animate-fade-in">
       <div className="card">
         <h1 className="text-3xl font-bold text-slate-100 mb-6">
           Edit Client

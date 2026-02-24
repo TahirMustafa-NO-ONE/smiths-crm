@@ -43,7 +43,7 @@ function HomePage({ customers }) {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8 animate-fade-in">
+    <div className="py-6 animate-fade-in">
       <div className="mb-8">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
           <div>
@@ -51,7 +51,7 @@ function HomePage({ customers }) {
             <p className="text-slate-400 mt-1">Manage your marketing agency clients</p>
           </div>
           
-          <button
+          {/* <button
             onClick={loadSampleData}
             disabled={loading}
             className="btn btn-secondary disabled:opacity-50 disabled:cursor-not-allowed"
@@ -70,7 +70,7 @@ function HomePage({ customers }) {
               />
             </svg>
             {loading ? "Loading Sample Data..." : "Load Sample Data"}
-          </button>
+          </button> */}
         </div>
 
         {message.text && (
