@@ -5,7 +5,7 @@ function Layout({ children }) {
     <>
       <header className="header">
         <h2>Smith Marketing Agency</h2>
-        <Link href="/add-customer">Add Customer</Link>
+        <Link href="/add-customer">Add Client</Link>
       </header>
       <div className="main">{children}</div>
       <footer className="footer">

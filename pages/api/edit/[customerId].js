@@ -18,14 +18,16 @@ export default async function handler(req, res) {
 
     try {
       const customer = await Customer.findOne({ _id: id });
-      customer.name = data.name;
-      customer.lastName = data.lastName;
-      customer.email = data.email;
-      customer.phone = data.phone;
-      customer.address = data.address;
-      customer.postalCode = data.postalCode;
-      customer.date = data.date;
-      customer.products = data.products;
+      customer.companyName = data.companyName;
+      customer.industry = data.industry;
+      customer.website = data.website;
+      customer.logoUrl = data.logoUrl;
+      customer.tier = data.tier;
+      customer.status = data.status;
+      customer.assignedAccountManager = data.assignedAccountManager;
+      customer.monthlyRetainerValue = data.monthlyRetainerValue;
+      customer.onboardedDate = data.onboardedDate;
+      customer.notes = data.notes;
       customer.updatedAt = Date.now();
       customer.save();
       res.status(200).json({ status: "success", data: customer });

@@ -4,17 +4,18 @@ import { useState } from "react";
 import Form from "../module/Form";
 
 function CustomerEditPage({ data, id }) {
-  const date = data.date ? moment(data.date).utc().format("YYYY-MM-DD") : "";
+  const onboardedDate = data.onboardedDate ? moment(data.onboardedDate).utc().format("YYYY-MM-DD") : "";
 
   const [form, setForm] = useState({
-    name: data.name,
-    lastName: data.lastName,
-    email: data.email,
-    phone: data.phone || "",
-    address: data.address || "",
-    postalCode: data.postalCode || "",
-    products: data.products || "",
-    date: date,
+    companyName: data.companyName,
+    industry: data.industry || "other",
+    website: data.website || "",
+    logoUrl: data.logoUrl || "",
+    tier: data.tier,
+    status: data.status,
+    monthlyRetainerValue: data.monthlyRetainerValue || 0,
+    onboardedDate: onboardedDate,
+    notes: data.notes || "",
   });
 
   const router = useRouter();
@@ -34,7 +35,7 @@ function CustomerEditPage({ data, id }) {
   };
   return (
     <div className="customer-page">
-      <h4>Edit Customer</h4>
+      <h4>Edit Client</h4>
       <Form form={form} setForm={setForm} />
       <div className="customer-page__buttons">
         <button className="first" onClick={cancelHandler}>

@@ -4,14 +4,15 @@ import Form from "../module/Form";
 
 function AddCustomerPage() {
   const [form, setForm] = useState({
-    name: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    address: "",
-    postalCode: "",
-    date: "",
-    products: [],
+    companyName: "",
+    industry: "other",
+    website: "",
+    logoUrl: "",
+    tier: "project-based",
+    status: "prospect",
+    monthlyRetainerValue: 0,
+    onboardedDate: "",
+    notes: "",
   });
 
   const router = useRouter();
@@ -29,21 +30,22 @@ function AddCustomerPage() {
 
   const cancelHandler = () => {
     setForm({
-      name: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      address: "",
-      postalCode: "",
-      date: "",
-      products: [],
+      companyName: "",
+      industry: "other",
+      website: "",
+      logoUrl: "",
+      tier: "project-based",
+      status: "prospect",
+      monthlyRetainerValue: 0,
+      onboardedDate: "",
+      notes: "",
     });
     router.push("/");
   };
 
   return (
     <div className="customer-page">
-      <h4>Add New Customer</h4>
+      <h4>Add New Client</h4>
       <Form form={form} setForm={setForm} />
       <div className="customer-page__buttons">
         <button className="first" onClick={cancelHandler}>

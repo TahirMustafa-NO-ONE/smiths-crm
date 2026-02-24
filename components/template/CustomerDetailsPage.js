@@ -15,48 +15,44 @@ function CustomerDetailsPage({ data }) {
   };
   return (
     <div className="customer-detail">
-      <h4>Customer's Details</h4>
+      <h4>Client Details</h4>
       <div className="customer-detail__main">
         <div className="customer-detail__item">
-          <span>Name: </span>
-          <p>{data.name}</p>
+          <span>Company Name: </span>
+          <p>{data.companyName}</p>
         </div>
         <div className="customer-detail__item">
-          <span>Last Name: </span>
-          <p>{data.lastName}</p>
+          <span>Industry: </span>
+          <p>{data.industry}</p>
         </div>
         <div className="customer-detail__item">
-          <span>Email: </span>
-          <p>{data.email}</p>
+          <span>Website: </span>
+          <p>{data.website || "N/A"}</p>
         </div>
         <div className="customer-detail__item">
-          <span>Phone: </span>
-          <p>{data.phone}</p>
+          <span>Logo URL: </span>
+          <p>{data.logoUrl || "N/A"}</p>
         </div>
         <div className="customer-detail__item">
-          <span>Address: </span>
-          <p>{data.address}</p>
+          <span>Tier: </span>
+          <p>{data.tier}</p>
         </div>
         <div className="customer-detail__item">
-          <span>Postal Code: </span>
-          <p>{data.postalCode}</p>
+          <span>Status: </span>
+          <p>{data.status}</p>
         </div>
         <div className="customer-detail__item">
-          <span>Date: </span>
-          <p>{moment(data.date).utc().format("YYYY-MM-DD")}</p>
+          <span>Monthly Retainer Value: </span>
+          <p>${data.monthlyRetainerValue}</p>
         </div>
-      </div>
-      <div className="customer-detail__products">
-        <p>Name</p>
-        <p>Price</p>
-        <p>Qty</p>
-        {data.products.map((product, index) => (
-          <React.Fragment key={index}>
-            <p>{product.name}</p>
-            <span>{product.price}</span>
-            <span>{product.qty}</span>
-          </React.Fragment>
-        ))}
+        <div className="customer-detail__item">
+          <span>Onboarded Date: </span>
+          <p>{data.onboardedDate ? moment(data.onboardedDate).utc().format("YYYY-MM-DD") : "N/A"}</p>
+        </div>
+        <div className="customer-detail__item">
+          <span>Notes: </span>
+          <p>{data.notes || "N/A"}</p>
+        </div>
       </div>
       <div className="customer-detail__buttons">
         <p>Edit or Delete?</p>

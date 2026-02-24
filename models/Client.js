@@ -1,6 +1,6 @@
 import { Schema, model, models } from "mongoose";
 
-const customerSchema = new Schema({
+const clientSchema = new Schema({
   companyName: {
     type: String,
     required: true,
@@ -21,7 +21,6 @@ const customerSchema = new Schema({
     type: String,
     enum: ["retainer", "project-based", "one-time"],
     required: true,
-    default: "project-based",
   },
   status: {
     type: String,
@@ -53,6 +52,6 @@ const customerSchema = new Schema({
   },
 });
 
-const Customer = models.Customer || model("Customer", customerSchema);
+const Client = models.Client || model("Client", clientSchema);
 
-export default Customer;
+export default Client;
