@@ -1,0 +1,19 @@
+{
+  "name": "smith-marketing-agency",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "moment": "^2.29.4",
+    "mongoose": "^6.9.0",
+    "next": "^16.1.6",
+    "node-modules": "^0.0.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  }
+}
