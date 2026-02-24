@@ -43,55 +43,74 @@ function HomePage({ customers }) {
   };
 
   return (
-    <div>
-      <div style={{ marginBottom: "20px", textAlign: "center" }}>
-        <button
-          onClick={loadSampleData}
-          disabled={loading}
-          style={{
-            padding: "12px 24px",
-            fontSize: "16px",
-            fontWeight: "bold",
-            backgroundColor: loading ? "#ccc" : "#0070f3",
-            color: "white",
-            border: "none",
-            borderRadius: "8px",
-            cursor: loading ? "not-allowed" : "pointer",
-            transition: "all 0.3s ease",
-            boxShadow: loading ? "none" : "0 4px 6px rgba(0, 112, 243, 0.3)",
-          }}
-          onMouseOver={(e) => {
-            if (!loading) e.target.style.backgroundColor = "#0051cc";
-          }}
-          onMouseOut={(e) => {
-            if (!loading) e.target.style.backgroundColor = "#0070f3";
-          }}
-        >
-          {loading ? "Loading Sample Data..." : "🎲 Load Sample Data"}
-        </button>
+    <div className="max-w-7xl mx-auto px-4 py-8 animate-fade-in">
+      <div className="mb-8">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
+          <div>
+            <h1 className="text-3xl font-bold text-slate-100">Client Dashboard</h1>
+            <p className="text-slate-400 mt-1">Manage your marketing agency clients</p>
+          </div>
+          
+          <button
+            onClick={loadSampleData}
+            disabled={loading}
+            className="btn btn-secondary disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <svg 
+              className="w-5 h-5 mr-2" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" 
+              />
+            </svg>
+            {loading ? "Loading Sample Data..." : "Load Sample Data"}
+          </button>
+        </div>
 
         {message.text && (
           <div
-            style={{
-              marginTop: "15px",
-              padding: "12px 20px",
-              borderRadius: "6px",
-              backgroundColor: message.type === "success" ? "#d4edda" : "#f8d7da",
-              color: message.type === "success" ? "#155724" : "#721c24",
-              border: `1px solid ${message.type === "success" ? "#c3e6cb" : "#f5c6cb"}`,
-              fontSize: "14px",
-              maxWidth: "600px",
-              margin: "15px auto 0",
-            }}
+            className={`p-4 rounded-lg border animate-slide-in ${
+              message.type === "success"
+                ? "bg-success-500/10 border-success-500/30 text-success-400"
+                : "bg-danger-500/10 border-danger-500/30 text-danger-400"
+            }`}
           >
             {message.text}
           </div>
         )}
       </div>
 
-      {customers.map((customer) => (
-        <Card key={customer._id} customer={customer} />
-      ))}
+      {customers.length === 0 ? (
+        <div className="card text-center py-12">
+          <svg 
+            className="w-16 h-16 mx-auto text-slate-600 mb-4" 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={2} 
+              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" 
+            />
+          </svg>
+          <h3 className="text-xl font-semibold text-slate-300 mb-2">No Clients Yet</h3>
+          <p className="text-slate-400 mb-4">Get started by adding your first client or loading sample data</p>
+        </div>
+      ) : (
+        <div className="grid gap-4">
+          {customers.map((customer) => (
+            <Card key={customer._id} customer={customer} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

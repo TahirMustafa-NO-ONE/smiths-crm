@@ -33,17 +33,22 @@ function CustomerEditPage({ data, id }) {
   const cancelHandler = () => {
     router.push("/");
   };
+  
   return (
-    <div className="customer-page">
-      <h4>Edit Client</h4>
-      <Form form={form} setForm={setForm} />
-      <div className="customer-page__buttons">
-        <button className="first" onClick={cancelHandler}>
-          Cancel
-        </button>
-        <button className="second" onClick={saveHandler}>
-          Edit
-        </button>
+    <div className="max-w-3xl mx-auto px-4 py-8 animate-fade-in">
+      <div className="card">
+        <h1 className="text-3xl font-bold text-slate-100 mb-6">
+          Edit Client
+        </h1>
+        <Form form={form} setForm={setForm} />
+        <div className="flex gap-3 mt-8 justify-end">
+          <button className="btn btn-secondary" onClick={cancelHandler}>
+            Cancel
+          </button>
+          <button className="btn btn-success" onClick={saveHandler}>
+            Save Changes
+          </button>
+        </div>
       </div>
     </div>
   );

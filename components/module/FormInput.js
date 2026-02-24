@@ -1,13 +1,16 @@
 function FormInput({ name, label, type, value, onChange }) {
   return (
-    <div className="form-input">
-      <label htmlFor={name}>{label}</label>
+    <div>
+      <label htmlFor={name} className="label">
+        {label}
+      </label>
       <input
-        type={type}
         id={name}
+        type={type}
         name={name}
         value={value}
         onChange={onChange}
+        className="input"
       />
     </div>
   );

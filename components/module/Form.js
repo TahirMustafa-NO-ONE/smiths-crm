@@ -5,8 +5,9 @@ function Form({ form, setForm }) {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
+  
   return (
-    <div>
+    <div className="space-y-5">
       <FormInput
         name="companyName"
         label="Company Name"
@@ -14,13 +15,17 @@ function Form({ form, setForm }) {
         value={form.companyName}
         onChange={changeHandler}
       />
-      <div className="form-input">
-        <label htmlFor="industry">Industry</label>
+      
+      <div>
+        <label htmlFor="industry" className="label">
+          Industry
+        </label>
         <select
           id="industry"
           name="industry"
           value={form.industry}
           onChange={changeHandler}
+          className="select"
         >
           <option value="other">Other</option>
           <option value="retail">Retail</option>
@@ -31,6 +36,7 @@ function Form({ form, setForm }) {
           <option value="manufacturing">Manufacturing</option>
         </select>
       </div>
+      
       <FormInput
         name="website"
         label="Website"
@@ -38,6 +44,7 @@ function Form({ form, setForm }) {
         value={form.website}
         onChange={changeHandler}
       />
+      
       <FormInput
         name="logoUrl"
         label="Logo URL"
@@ -45,32 +52,41 @@ function Form({ form, setForm }) {
         value={form.logoUrl}
         onChange={changeHandler}
       />
-      <div className="form-input">
-        <label htmlFor="tier">Tier</label>
+      
+      <div>
+        <label htmlFor="tier" className="label">
+          Tier
+        </label>
         <select
           id="tier"
           name="tier"
           value={form.tier}
           onChange={changeHandler}
+          className="select"
         >
           <option value="project-based">Project-Based</option>
           <option value="retainer">Retainer</option>
           <option value="one-time">One-Time</option>
         </select>
       </div>
-      <div className="form-input">
-        <label htmlFor="status">Status</label>
+      
+      <div>
+        <label htmlFor="status" className="label">
+          Status
+        </label>
         <select
           id="status"
           name="status"
           value={form.status}
           onChange={changeHandler}
+          className="select"
         >
           <option value="prospect">Prospect</option>
           <option value="active">Active</option>
           <option value="inactive">Inactive</option>
         </select>
       </div>
+      
       <FormInput
         name="monthlyRetainerValue"
         label="Monthly Retainer Value"
@@ -78,6 +94,7 @@ function Form({ form, setForm }) {
         value={form.monthlyRetainerValue}
         onChange={changeHandler}
       />
+      
       <FormInput
         name="onboardedDate"
         label="Onboarded Date"
@@ -85,14 +102,18 @@ function Form({ form, setForm }) {
         value={form.onboardedDate}
         onChange={changeHandler}
       />
-      <div className="form-input">
-        <label htmlFor="notes">Notes</label>
+      
+      <div>
+        <label htmlFor="notes" className="label">
+          Notes
+        </label>
         <textarea
           id="notes"
           name="notes"
           value={form.notes}
           onChange={changeHandler}
           rows="4"
+          className="textarea"
         />
       </div>
     </div>
