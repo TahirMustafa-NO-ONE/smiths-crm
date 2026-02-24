@@ -1,5 +1,8 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcryptjs";
+import connectDB from "../../../utils/connectDB";
+import User from "../../../models/User";
 
 export const authOptions = {
   providers: [
@@ -10,28 +13,38 @@ export const authOptions = {
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        // Hardcoded admin user - can be replaced with database lookup later
-        const adminUser = {
-          id: "1",
-          email: "admin@smithsagency.com",
-          password: "admin123",
-          name: "Admin User",
-        };
+        try {
+          // Connect to database
+          await connectDB();
 
-        if (
-          credentials?.email === adminUser.email &&
-          credentials?.password === adminUser.password
-        ) {
+          // Find user by email
+          const user = await User.findOne({ email: credentials?.email });
+
+          if (!user) {
+            return null;
+          }
+
+          // Verify password
+          const isValidPassword = await bcrypt.compare(
+            credentials?.password,
+            user.password
+          );
+
+          if (!isValidPassword) {
+            return null;
+          }
+
           // Return user object (password excluded)
           return {
-            id: adminUser.id,
-            email: adminUser.email,
-            name: adminUser.name,
+            id: user._id.toString(),
+            email: user.email,
+            name: user.name,
+            role: user.role,
           };
+        } catch (error) {
+          console.error("Auth error:", error);
+          return null;
         }
-
-        // Return null if credentials are invalid
-        return null;
       },
     }),
   ],
@@ -48,6 +61,7 @@ export const authOptions = {
         token.id = user.id;
         token.email = user.email;
         token.name = user.name;
+        token.role = user.role;
       }
       return token;
     },
@@ -56,6 +70,7 @@ export const authOptions = {
         session.user.id = token.id;
         session.user.email = token.email;
         session.user.name = token.name;
+        session.user.role = token.role;
       }
       return session;
     },
