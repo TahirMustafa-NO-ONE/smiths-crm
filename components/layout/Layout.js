@@ -41,21 +41,45 @@ function Layout({ children }) {
               
               {/* Navigation Menu - only show for admin */}
               {session?.user?.role === "admin" && (
-                <nav className="hidden md:flex items-center gap-2">
-                  <Link href="/">
-                    <button className={`nav-link ${router.pathname === "/" ? "text-primary-400" : ""}`}>
-                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                      </svg>
+                <nav className="hidden lg:flex items-center gap-1">
+                  <Link href="/dashboard">
+                    <button className={`nav-link ${router.pathname === "/dashboard" ? "text-primary-400" : ""}`}>
+                      Dashboard
+                    </button>
+                  </Link>
+                  <Link href="/clients">
+                    <button className={`nav-link ${router.pathname.startsWith("/clients") ? "text-primary-400" : ""}`}>
                       Clients
                     </button>
                   </Link>
-                  <Link href="/users">
-                    <button className={`nav-link ${router.pathname === "/users" ? "text-primary-400" : ""}`}>
-                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                      </svg>
-                      Users
+                  <Link href="/team">
+                    <button className={`nav-link ${router.pathname.startsWith("/team") ? "text-primary-400" : ""}`}>
+                      Team
+                    </button>
+                  </Link>
+                  <Link href="/contacts">
+                    <button className={`nav-link ${router.pathname.startsWith("/contacts") ? "text-primary-400" : ""}`}>
+                      Contacts
+                    </button>
+                  </Link>
+                  <Link href="/leads">
+                    <button className={`nav-link ${router.pathname.startsWith("/leads") ? "text-primary-400" : ""}`}>
+                      Leads
+                    </button>
+                  </Link>
+                  <Link href="/projects">
+                    <button className={`nav-link ${router.pathname.startsWith("/projects") ? "text-primary-400" : ""}`}>
+                      Projects
+                    </button>
+                  </Link>
+                  <Link href="/campaigns">
+                    <button className={`nav-link ${router.pathname.startsWith("/campaigns") ? "text-primary-400" : ""}`}>
+                      Campaigns
+                    </button>
+                  </Link>
+                  <Link href="/tasks">
+                    <button className={`nav-link ${router.pathname.startsWith("/tasks") ? "text-primary-400" : ""}`}>
+                      Tasks
                     </button>
                   </Link>
                 </nav>
