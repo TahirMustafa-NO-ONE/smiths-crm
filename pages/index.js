@@ -4,8 +4,8 @@ import HomePage from "../components/template/HomePage";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]";
 
-function Index({ customers }) {
-  return <HomePage customers={customers} />;
+function Index({ customers, dbError }) {
+  return <HomePage customers={customers} dbError={dbError} />;
 }
 
 export default Index;
@@ -29,11 +29,16 @@ export async function getServerSideProps(context) {
     return {
       props: {
         customers: JSON.parse(JSON.stringify(customers)),
+        dbError: false,
       },
     };
   } catch (err) {
+    console.error("DB connection error:", err.message);
     return {
-      notFound: true,
+      props: {
+        customers: [],
+        dbError: true,
+      },
     };
   }
 }

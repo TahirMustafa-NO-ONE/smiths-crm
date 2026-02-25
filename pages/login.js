@@ -145,7 +145,7 @@ export default function LoginPage() {
           </form>
 
           {/* Demo Credentials Info */}
-          {/* <div className="mt-6 pt-6 border-t border-slate-700/50">
+          <div className="mt-6 pt-6 border-t border-slate-700/50">
             <p className="text-xs text-slate-500 text-center mb-2">Demo Credentials:</p>
             <div className="bg-slate-900/50 rounded-lg p-3 space-y-1">
               <p className="text-xs text-slate-400 font-mono">
@@ -155,7 +155,7 @@ export default function LoginPage() {
                 <span className="text-slate-500">Password:</span> admin123
               </p>
             </div>
-          </div> */}
+          </div>
         </div>
 
         {/* Footer */}
