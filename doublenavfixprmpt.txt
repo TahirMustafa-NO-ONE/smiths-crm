@@ -1,0 +1,16 @@
+Fix the double navbar issue in the smiths-crm Next.js application:
+
+PROBLEM:
+The Layout component is being rendered twice - once globally in pages/_app.js and again in every individual page component (dashboard.js, leads/index.js, etc.). This causes duplicate headers/navbars.
+
+SOLUTION:
+1. Remove the Layout wrapper from pages/_app.js and keep ONLY the SessionProvider and Component
+2. Keep the individual Layout imports in each page file (dashboard.js, leads/index.js, etc.) so the navbar renders only once per page
+3. Verify that the navbar appears only once on all pages after making changes
+4. Test on multiple pages: /dashboard, /leads, /clients, /contacts to ensure no duplication
+
+AFFECTED FILES:
+- pages/_app.js (remove Layout wrapper)
+- All page files will keep their Layout imports: pages/dashboard.js, pages/leads/index.js, pages/clients/index.js, etc.
+
+The navbar should render exactly once on every page after this fix.
