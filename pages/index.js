@@ -1,11 +1,10 @@
-import connectDB from "../utils/connectDB";
-import Customer from "../models/Customer";
-import HomePage from "../components/template/HomePage";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]";
 
-function Index({ customers, dbError }) {
-  return <HomePage customers={customers} dbError={dbError} />;
+// Root route redirects authenticated users to dashboard
+// This page never actually renders
+function Index() {
+  return null;
 }
 
 export default Index;
@@ -23,22 +22,11 @@ export async function getServerSideProps(context) {
     };
   }
 
-  try {
-    await connectDB();
-    const customers = await Customer.find();
-    return {
-      props: {
-        customers: JSON.parse(JSON.stringify(customers)),
-        dbError: false,
-      },
-    };
-  } catch (err) {
-    console.error("DB connection error:", err.message);
-    return {
-      props: {
-        customers: [],
-        dbError: true,
-      },
-    };
-  }
+  // Redirect authenticated users to dashboard
+  return {
+    redirect: {
+      destination: "/dashboard",
+      permanent: false,
+    },
+  };
 }
