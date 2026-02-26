@@ -56,7 +56,7 @@ function HomePage({ customers, dbError }) {
       <div className="flex flex-col items-center justify-center min-h-[400px] gap-4 animate-fade-in">
         <div className="flex items-center gap-3 px-6 py-4 rounded-xl bg-slate-800/60 border border-slate-700/50 shadow-lg">
           <div className="spinner w-5 h-5 flex-shrink-0" />
-          <span className="text-slate-300 text-sm font-medium">Connecting to database...</span>
+          <span className="text-slate-300 text-sm font-medium">Connecting to Server...</span>
         </div>
       </div>
     );
