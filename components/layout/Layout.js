@@ -82,6 +82,11 @@ function Layout({ children }) {
                       Tasks
                     </button>
                   </Link>
+                  <Link href="/users">
+                    <button className={`nav-link ${router.pathname.startsWith("/users") ? "text-primary-400" : ""}`}>
+                      Users
+                    </button>
+                  </Link>
                 </nav>
               )}
             </div>
