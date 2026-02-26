@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]";
 import moment from "moment";
+import Layout from "../components/layout/Layout";
 
 export default function UsersPage() {
   const [users, setUsers] = useState([]);
@@ -133,14 +134,17 @@ export default function UsersPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="spinner w-12 h-12"></div>
-      </div>
+      <Layout>
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="spinner w-12 h-12"></div>
+        </div>
+      </Layout>
     );
   }
 
   return (
-    <div className="py-6 animate-fade-in">
+    <Layout>
+      <div className="py-6 animate-fade-in">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-3xl font-bold text-slate-100">User Management</h1>
@@ -366,7 +370,8 @@ export default function UsersPage() {
           </div>
         </>
       )}
-    </div>
+      </div>
+    </Layout>
   );
 }
 
