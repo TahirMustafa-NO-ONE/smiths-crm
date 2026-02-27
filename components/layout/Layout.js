@@ -52,16 +52,6 @@ function Layout({ children }) {
                       Clients
                     </button>
                   </Link>
-                  <Link href="/team">
-                    <button className={`nav-link ${router.pathname.startsWith("/team") ? "text-primary-400" : ""}`}>
-                      Team
-                    </button>
-                  </Link>
-                  <Link href="/contacts">
-                    <button className={`nav-link ${router.pathname.startsWith("/contacts") ? "text-primary-400" : ""}`}>
-                      Contacts
-                    </button>
-                  </Link>
                   <Link href="/leads">
                     <button className={`nav-link ${router.pathname.startsWith("/leads") ? "text-primary-400" : ""}`}>
                       Leads
@@ -72,14 +62,19 @@ function Layout({ children }) {
                       Projects
                     </button>
                   </Link>
+                  <Link href="/tasks">
+                    <button className={`nav-link ${router.pathname.startsWith("/tasks") ? "text-primary-400" : ""}`}>
+                      Tasks
+                    </button>
+                  </Link>
                   <Link href="/campaigns">
                     <button className={`nav-link ${router.pathname.startsWith("/campaigns") ? "text-primary-400" : ""}`}>
                       Campaigns
                     </button>
                   </Link>
-                  <Link href="/tasks">
-                    <button className={`nav-link ${router.pathname.startsWith("/tasks") ? "text-primary-400" : ""}`}>
-                      Tasks
+                  <Link href="/team">
+                    <button className={`nav-link ${router.pathname.startsWith("/team") ? "text-primary-400" : ""}`}>
+                      Team
                     </button>
                   </Link>
                   <Link href="/users">
