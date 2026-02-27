@@ -1,7 +1,7 @@
 import moment from "moment";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import Form from "../module/Form";
+import Form from "./Form";
 
 function CustomerEditPage({ data, id }) {
   const onboardedDate = data.onboardedDate ? moment(data.onboardedDate).utc().format("YYYY-MM-DD") : "";

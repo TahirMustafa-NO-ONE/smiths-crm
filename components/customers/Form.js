@@ -1,4 +1,4 @@
-import FormInput from "./FormInput";
+import FormInput from "../ui/FormInput";
 
 function Form({ form, setForm }) {
   const changeHandler = (e) => {

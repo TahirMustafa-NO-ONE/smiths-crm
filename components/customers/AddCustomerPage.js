@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
-import Form from "../module/Form";
+import Form from "./Form";
 
 function AddCustomerPage() {
   const [form, setForm] = useState({

@@ -1,4 +1,4 @@
-import AddCustomerPage from "../../components/template/AddCustomerPage";
+import AddCustomerPage from "../../components/customers/AddCustomerPage";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
 

@@ -1,6 +1,6 @@
 import connectDB from "../utils/connectDB";
 import Customer from "../models/Customer";
-import HomePage from "../components/template/HomePage";
+import HomePage from "../components/customers/HomePage";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]";
 

@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import CustomerEditPage from "../../components/template/CustomerEditPage";
+import CustomerEditPage from "../../components/customers/CustomerEditPage";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
 

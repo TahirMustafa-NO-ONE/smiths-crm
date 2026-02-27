@@ -1,4 +1,4 @@
-import Card from "../module/Card";
+import Card from "./Card";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
