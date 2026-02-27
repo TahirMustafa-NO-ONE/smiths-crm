@@ -12,7 +12,7 @@
 
 **A powerful, modern Customer Relationship Management system with full-featured dashboard, analytics, and seamless client management.**
 
-[🎯 Features](#-key-features) • [🚀 Quick Start](#-quick-start) • [📖 Documentation](#-project-structure) • [🛠️ Tech Stack](#️-tech-stack)
+[🎯 Features](#-key-features) • [🚀 Quick Start](#-quick-start) • [📖 Documentation](#-project-structure) • [🛠️ Tech Stack](#️-tech-stack) • [🌐 Deploy to Production](DEPLOYMENT.md)
 
 ---
 
@@ -210,6 +210,23 @@ pnpm seed
 # Run linter
 pnpm lint
 ```
+
+### 🌐 Production Deployment
+
+Ready to deploy to production? 
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone)
+
+**📘 [Complete Deployment Guide](DEPLOYMENT.md)** - Step-by-step instructions for deploying to Vercel with MongoDB Atlas
+
+**Quick Deploy Checklist:**
+- ✅ Push code to GitHub
+- ✅ Setup MongoDB Atlas database
+- ✅ Create Vercel account and import repository  
+- ✅ Configure environment variables
+- ✅ Deploy and seed admin user
+
+[🚀 View Full Deployment Documentation →](DEPLOYMENT.md)
 
 ## ✨ Key Features
 
