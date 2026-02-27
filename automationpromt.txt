@@ -1,0 +1,238 @@
+You are working on a CRM system called smiths-crm. The stack is:
+- Next.js 14 (Pages Router)
+- MongoDB with Mongoose
+- NextAuth authentication
+- API routes under /pages/api
+- pnpm as package manager
+
+Implement a complete Automation System with the following requirements. Follow every step exactly.
+
+---
+
+## PACKAGES TO INSTALL
+
+pnpm add resend pdfkit uuid
+
+---
+
+## STEP 1: Create Invoice Model
+File: /models/Invoice.js
+
+Mongoose schema with fields:
+- projectId (ref: Project)
+- clientId (ref: Client)
+- invoiceNumber (String, unique) — format: INV-2026-0001
+- amount (Number)
+- status (String, enum: ['paid', 'unpaid'], default: 'unpaid')
+- issuedDate (Date, default: Date.now)
+- dueDate (Date)
+- pdfUrl (String)
+
+---
+
+## STEP 2: Invoice Number Utility
+File: /utils/invoiceNumber.js
+
+Create async function generateInvoiceNumber() that:
+- Queries MongoDB for the latest invoice
+- Returns next sequential number in format INV-YYYY-XXXX
+- Example: INV-2026-0001, INV-2026-0002
+
+---
+
+## STEP 3: Email Service using Resend
+File: /utils/email/sendEmail.js
+
+Use the Resend npm package (not nodemailer).
+Create and export async function sendEmail({ to, subject, html }) that:
+- Initializes Resend with process.env.RESEND_API_KEY
+- Sends email from process.env.EMAIL_FROM
+- Logs errors but does not throw (graceful failure)
+
+File: /utils/email/emailTemplates.js
+
+Export these template functions (each returns { subject, html }):
+
+1. projectCompletedTemplate({ clientName, projectName })
+   Subject: "Your Project Has Been Completed"
+
+2. projectInProgressTemplate({ clientName, projectName })
+   Subject: "Your Project Is Now In Progress"
+
+3. projectCancelledTemplate({ clientName, projectName })
+   Subject: "Project Cancellation Notice"
+
+4. taskCompletedTemplate({ assigneeName, taskTitle, projectName })
+   Subject: "Task Completed"
+
+5. taskAssignedTemplate({ assigneeName, taskTitle, projectName })
+   Subject: "New Task Assigned to You"
+
+6. invoiceGeneratedTemplate({ clientName, invoiceNumber, amount, dueDate, pdfUrl })
+   Subject: "Invoice Generated - {invoiceNumber}"
+
+7. newClientTemplate({ clientName })
+   Subject: "Welcome to Smith Marketing Agency"
+
+8. newProjectTemplate({ clientName, projectName })
+   Subject: "New Project Created"
+
+All emails should be clean HTML with the company name "Smith Marketing Agency" in the footer.
+
+---
+
+## STEP 4: Invoice PDF Generator
+File: /utils/invoice/generateInvoicePDF.js
+
+Use pdfkit.
+Create and export async function generateInvoicePDF({ invoiceNumber, clientName, projectName, amount, issuedDate, dueDate }) that:
+- Creates a PDF with: company name, client name, project name, invoice number, amount, issued date, due date
+- Saves to /public/invoices/{invoiceNumber}.pdf
+- Creates /public/invoices/ directory if it doesn't exist
+- Returns the public URL string: /invoices/{invoiceNumber}.pdf
+
+File: /utils/invoice/generateInvoice.js
+
+Create and export async function generateInvoice({ project, client }) that:
+- Calls generateInvoiceNumber()
+- Calls generateInvoicePDF()
+- Creates and saves Invoice document in MongoDB
+- Returns the saved invoice document
+
+---
+
+## STEP 5: Automation Service Layer
+File: /utils/automation/automationService.js
+
+Import and use sendEmail, emailTemplates, generateInvoice.
+
+Export these async functions:
+
+1. handleProjectStatusChange(project, client, adminEmail)
+   - If status === 'completed': call generateInvoice(), then send invoiceGeneratedTemplate to client + admin. Also send projectCompletedTemplate to client.
+   - If status === 'in-progress': send projectInProgressTemplate to client
+   - If status === 'cancelled': send projectCancelledTemplate to client
+
+2. handleTaskStatusChange(task, assigneeEmail, assigneeName, projectName)
+   - If status === 'completed': send taskCompletedTemplate to assignee
+   - If status === 'assigned': send taskAssignedTemplate to assignee
+
+3. handleNewClient(client)
+   - Send newClientTemplate to client email + admin email
+
+4. handleNewProject(project, client)
+   - Send newProjectTemplate to client email + admin email
+
+All functions must wrap logic in try/catch and log errors without throwing.
+
+---
+
+## STEP 6: Modify Project API
+File: /pages/api/project/[projectId].js (modify existing PUT/PATCH handler)
+
+After updating the project in MongoDB:
+- Check if status has changed
+- Populate client data from the project
+- Call automationService.handleProjectStatusChange(updatedProject, client, process.env.ADMIN_EMAIL)
+- Run automation asynchronously (do not await — fire and forget) to avoid blocking the API response
+
+---
+
+## STEP 7: Modify Task API
+File: /pages/api/task/[taskId].js (modify existing PUT/PATCH handler)
+
+After updating the task in MongoDB:
+- Check if status has changed
+- Populate assignee user data
+- Call automationService.handleTaskStatusChange(task, assignee.email, assignee.name, projectName)
+- Run automation asynchronously (fire and forget)
+
+---
+
+## STEP 8: Modify Client API
+File: /pages/api/client/index.js or the relevant POST handler (modify existing)
+
+After creating a new client:
+- Call automationService.handleNewClient(newClient) asynchronously
+
+---
+
+## STEP 9: Invoices Frontend Page
+File: /pages/invoices/index.js
+
+Create a page that:
+- Uses NextAuth useSession — redirect to login if unauthenticated
+- Fetches all invoices from a new API route GET /api/invoices
+- Displays a table with columns: Invoice Number, Client, Project, Amount, Status, Issued Date, Due Date, Download PDF
+- "Download PDF" is a link to the pdfUrl
+- Shows invoice status as a colored badge (green = paid, red = unpaid)
+- Match the existing UI style of the project
+
+---
+
+## STEP 10: Invoices API Route
+File: /pages/api/invoices/index.js
+
+GET handler:
+- Validate NextAuth session
+- Return all invoices populated with projectId and clientId fields
+- Only admin role can access (check session.user.role)
+
+---
+
+## STEP 11: Environment Variables
+Add these to .env.local (create entries, leave values blank for user to fill):
+
+RESEND_API_KEY=
+EMAIL_FROM=
+ADMIN_EMAIL=
+APP_URL=
+
+---
+
+## STEP 12: Error Handling Rules
+
+- If email sending fails: log the error, continue execution, never crash the API
+- If PDF generation fails: log the error, save invoice without pdfUrl, mark invoice with status 'unpaid'
+- If invoice generation fails: log the error, still return successful API response for the project update
+- All automation runs fire-and-forget so API response is never blocked
+
+---
+
+## STEP 13: Security Rules
+
+- All /pages/api/invoices routes must validate NextAuth session
+- Invoice generation only triggers server-side (never from frontend directly)
+- Only users with role 'admin' can view the invoices list page and API
+
+---
+
+## FOLDER STRUCTURE TO CREATE:
+
+models/
+  Invoice.js
+
+utils/
+  invoiceNumber.js
+  email/
+    sendEmail.js
+    emailTemplates.js
+  invoice/
+    generateInvoice.js
+    generateInvoicePDF.js
+  automation/
+    automationService.js
+
+pages/
+  invoices/
+    index.js
+  api/
+    invoices/
+      index.js
+
+public/
+  invoices/   ← create this empty folder with a .gitkeep file
+
+---
+
+Implement all files completely with production-ready code. Do not leave placeholder comments or TODOs. Every function must be fully implemented.
