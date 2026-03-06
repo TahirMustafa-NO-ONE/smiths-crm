@@ -49,18 +49,23 @@ export async function handleProjectStatusChange(project, client, adminEmail) {
           pdfUrl: invoice.pdfUrl,
         });
 
+        console.log("Sending invoice email to client:", client.email);
         await sendEmail({
           to: client.email,
           subject: invoiceEmail.subject,
           html: invoiceEmail.html,
         });
 
+        console.log("Admin email for invoice:", adminEmail);
         if (adminEmail) {
+          console.log("Sending invoice email to admin:", adminEmail);
           await sendEmail({
             to: adminEmail,
             subject: invoiceEmail.subject,
             html: invoiceEmail.html,
           });
+        } else {
+          console.log("Admin email not provided, skipping admin invoice notification");
         }
       }
     } else if (project.status === "in-progress") {
@@ -132,18 +137,23 @@ export async function handleNewClient(client) {
       clientName,
     });
 
+    console.log("Sending welcome email to client:", client.email);
     await sendEmail({
       to: client.email,
       subject: emailTemplate.subject,
       html: emailTemplate.html,
     });
 
+    console.log("ADMIN_EMAIL from env:", process.env.ADMIN_EMAIL);
     if (process.env.ADMIN_EMAIL) {
+      console.log("Sending welcome email to admin:", process.env.ADMIN_EMAIL);
       await sendEmail({
         to: process.env.ADMIN_EMAIL,
         subject: emailTemplate.subject,
         html: emailTemplate.html,
       });
+    } else {
+      console.log("ADMIN_EMAIL not set, skipping admin notification");
     }
   } catch (error) {
     console.error("Error in handleNewClient:", error);
@@ -164,18 +174,23 @@ export async function handleNewProject(project, client) {
       projectName: project.title,
     });
 
+    console.log("Sending new project email to client:", client.email);
     await sendEmail({
       to: client.email,
       subject: emailTemplate.subject,
       html: emailTemplate.html,
     });
 
+    console.log("ADMIN_EMAIL from env:", process.env.ADMIN_EMAIL);
     if (process.env.ADMIN_EMAIL) {
+      console.log("Sending new project email to admin:", process.env.ADMIN_EMAIL);
       await sendEmail({
         to: process.env.ADMIN_EMAIL,
         subject: emailTemplate.subject,
         html: emailTemplate.html,
       });
+    } else {
+      console.log("ADMIN_EMAIL not set, skipping admin notification");
     }
   } catch (error) {
     console.error("Error in handleNewProject:", error);
