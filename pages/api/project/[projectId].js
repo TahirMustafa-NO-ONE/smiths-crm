@@ -43,7 +43,7 @@ export default async function handler(req, res) {
     }
   }
 
-  if (req.method === "PATCH") {
+  if (req.method === "PATCH" || req.method === "PUT") {
     const id = req.query.projectId;
     const data = req.body.data;
 
