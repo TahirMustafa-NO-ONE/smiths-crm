@@ -5,9 +5,9 @@ import { useState, useEffect } from "react";
 function EditProjectPage() {
   const [form, setForm] = useState({
     title: "",
-    type: "Design",
+    type: "SEO",
     client: "",
-    status: "Planning",
+    status: "planning",
     startDate: "",
     deadline: "",
     budget: 0,
@@ -39,9 +39,9 @@ function EditProjectPage() {
         const project = data.data;
         setForm({
           title: project.title || "",
-          type: project.type || "Design",
+          type: project.type || "SEO",
           client: project.client?._id || "",
-          status: project.status || "Planning",
+          status: project.status || "planning",
           startDate: project.startDate
             ? project.startDate.split("T")[0]
             : "",
@@ -191,12 +191,12 @@ function EditProjectPage() {
                   onChange={changeHandler}
                   className="select"
                 >
-                  <option value="Design">Design</option>
-                  <option value="Development">Development</option>
-                  <option value="Content">Content</option>
-                  <option value="Strategy">Strategy</option>
-                  <option value="Social Media">Social Media</option>
                   <option value="SEO">SEO</option>
+                  <option value="Social Media">Social Media</option>
+                  <option value="Paid Ads">Paid Ads</option>
+                  <option value="Branding">Branding</option>
+                  <option value="Web Design">Web Design</option>
+                  <option value="Email Marketing">Email Marketing</option>
                 </select>
               </div>
 
@@ -233,11 +233,10 @@ function EditProjectPage() {
                   onChange={changeHandler}
                   className="select"
                 >
-                  <option value="Planning">Planning</option>
-                  <option value="In Progress">In Progress</option>
-                  <option value="On Hold">On Hold</option>
-                  <option value="Completed">Completed</option>
-                  <option value="Cancelled">Cancelled</option>
+                  <option value="planning">Planning</option>
+                  <option value="in-progress">In Progress</option>
+                  <option value="on-hold">On Hold</option>
+                  <option value="completed">Completed</option>
                 </select>
               </div>
 

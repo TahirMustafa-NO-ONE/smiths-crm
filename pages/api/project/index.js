@@ -40,12 +40,18 @@ export default async function handler(req, res) {
     try {
       const project = await Project.create(data);
 
-      const client = await Client.findById(data.client);
-      if (client) {
-        handleNewProject(project, client).catch((error) => {
-          console.error("Automation error:", error);
+      // Run automation asynchronously without blocking response
+      Client.findById(data.client)
+        .then((client) => {
+          if (client) {
+            handleNewProject(project, client).catch((error) => {
+              console.error("Automation error (non-blocking):", error);
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching client for automation:", error);
         });
-      }
 
       res
         .status(201)
