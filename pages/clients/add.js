@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 function AddClientPage() {
   const [form, setForm] = useState({
     companyName: "",
+    name: "",
+    email: "",
     industry: "other",
     website: "",
     logoUrl: "",
@@ -41,8 +43,8 @@ function AddClientPage() {
   };
 
   const saveHandler = async () => {
-    if (!form.companyName || !form.tier) {
-      alert("Please fill in all required fields");
+    if (!form.companyName || !form.tier || !form.email) {
+      alert("Please fill in all required fields (Company Name, Email, and Tier)");
       return;
     }
 
@@ -93,6 +95,38 @@ function AddClientPage() {
                 className="input"
                 placeholder="Enter company name"
               />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label htmlFor="name" className="label">
+                  Contact Name
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  value={form.name}
+                  onChange={changeHandler}
+                  className="input"
+                  placeholder="Enter contact person name"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="email" className="label">
+                  Email <span className="text-danger-400">*</span>
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={form.email}
+                  onChange={changeHandler}
+                  className="input"
+                  placeholder="client@example.com"
+                />
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
