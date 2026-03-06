@@ -1,5 +1,6 @@
 import Task from "../../../models/Task";
 import connectDB from "../../../utils/connectDB";
+import { handleTaskStatusChange } from "../../../utils/automation/automationService";
 
 export default async function handler(req, res) {
   try {
@@ -49,11 +50,30 @@ export default async function handler(req, res) {
     const data = req.body.data;
 
     try {
+      const oldTask = await Task.findById(id);
+      const statusChanged = oldTask && oldTask.status !== data.status;
+
       const task = await Task.findByIdAndUpdate(
         id,
         { ...data, updatedAt: Date.now() },
         { new: true }
-      );
+      )
+        .populate("assignedTo")
+        .populate("linkedToProject");
+
+      if (statusChanged && task && task.assignedTo) {
+        const projectName = task.linkedToProject?.title || "Unknown Project";
+
+        handleTaskStatusChange(
+          task,
+          task.assignedTo.email,
+          task.assignedTo.name,
+          projectName
+        ).catch((error) => {
+          console.error("Automation error:", error);
+        });
+      }
+
       res.status(200).json({ status: "success", data: task });
     } catch (err) {
       console.log(err.message);

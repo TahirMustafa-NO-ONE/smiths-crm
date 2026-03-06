@@ -1,5 +1,6 @@
 import Client from "../../../models/Client";
 import connectDB from "../../../utils/connectDB";
+import { handleNewClient } from "../../../utils/automation/automationService";
 
 export default async function handler(req, res) {
   try {
@@ -35,6 +36,11 @@ export default async function handler(req, res) {
 
     try {
       const client = await Client.create(data);
+
+      handleNewClient(client).catch((error) => {
+        console.error("Automation error:", error);
+      });
+
       res
         .status(201)
         .json({ status: "success", message: "Data created", data: client });

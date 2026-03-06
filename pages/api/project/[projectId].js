@@ -1,5 +1,6 @@
 import Project from "../../../models/Project";
 import connectDB from "../../../utils/connectDB";
+import { handleProjectStatusChange } from "../../../utils/automation/automationService";
 
 export default async function handler(req, res) {
   try {
@@ -47,11 +48,25 @@ export default async function handler(req, res) {
     const data = req.body.data;
 
     try {
+      const oldProject = await Project.findById(id);
+      const statusChanged = oldProject && oldProject.status !== data.status;
+
       const project = await Project.findByIdAndUpdate(
         id,
         { ...data, updatedAt: Date.now() },
         { new: true }
-      );
+      ).populate("client");
+
+      if (statusChanged && project && project.client) {
+        handleProjectStatusChange(
+          project,
+          project.client,
+          process.env.ADMIN_EMAIL
+        ).catch((error) => {
+          console.error("Automation error:", error);
+        });
+      }
+
       res.status(200).json({ status: "success", data: project });
     } catch (err) {
       console.log(err.message);

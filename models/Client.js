@@ -6,6 +6,12 @@ const clientSchema = new Schema({
     required: true,
     minLength: 1,
   },
+  name: {
+    type: String,
+  },
+  email: {
+    type: String,
+  },
   industry: {
     type: String,
     enum: ["retail", "healthcare", "SaaS", "finance", "education", "manufacturing", "other"],

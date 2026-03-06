@@ -1,5 +1,7 @@
 import Project from "../../../models/Project";
 import connectDB from "../../../utils/connectDB";
+import { handleNewProject } from "../../../utils/automation/automationService";
+import Client from "../../../models/Client";
 
 export default async function handler(req, res) {
   try {
@@ -37,6 +39,14 @@ export default async function handler(req, res) {
 
     try {
       const project = await Project.create(data);
+
+      const client = await Client.findById(data.client);
+      if (client) {
+        handleNewProject(project, client).catch((error) => {
+          console.error("Automation error:", error);
+        });
+      }
+
       res
         .status(201)
         .json({ status: "success", message: "Data created", data: project });
