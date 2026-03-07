@@ -10,6 +10,7 @@ import {
   newProjectTemplate,
   adminNewClientNotification,
   adminNewProjectNotification,
+  adminInvoiceNotification,
 } from "../email/emailTemplates.js";
 import { generateInvoice } from "../invoice/generateInvoice.js";
 
@@ -60,11 +61,19 @@ export async function handleProjectStatusChange(project, client, adminEmail) {
 
         console.log("Admin email for invoice:", adminEmail);
         if (adminEmail) {
-          console.log("Sending invoice email to admin:", adminEmail);
+          const adminInvoiceEmail = adminInvoiceNotification({
+            clientName,
+            invoiceNumber: invoice.invoiceNumber,
+            amount: invoice.amount,
+            dueDate: invoice.dueDate,
+            pdfUrl: invoice.pdfUrl,
+            projectName: project.title,
+          });
+          console.log("Sending admin invoice notification:", adminEmail);
           await sendEmail({
             to: adminEmail,
-            subject: invoiceEmail.subject,
-            html: invoiceEmail.html,
+            subject: adminInvoiceEmail.subject,
+            html: adminInvoiceEmail.html,
           });
         } else {
           console.log("Admin email not provided, skipping admin invoice notification");

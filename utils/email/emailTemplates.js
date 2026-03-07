@@ -233,6 +233,70 @@ export function invoiceGeneratedTemplate({ clientName, invoiceNumber, amount, du
   };
 }
 
+export function adminInvoiceNotification({ clientName, invoiceNumber, amount, dueDate, pdfUrl, projectName }) {
+  const appUrl = process.env.APP_URL || "http://localhost:3000";
+  const formattedAmount = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(amount);
+  const formattedDueDate = new Date(dueDate).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+  return {
+    subject: `Invoice Generated - ${invoiceNumber} - ${clientName}`,
+    html: `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <style>
+          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+          .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+          .header { background-color: #E91E63; color: white; padding: 20px; text-align: center; }
+          .content { padding: 20px; background-color: #f9f9f9; }
+          .invoice-details { background-color: white; padding: 15px; margin: 15px 0; border-left: 4px solid #E91E63; }
+          .button { display: inline-block; padding: 12px 24px; background-color: #E91E63; color: white; text-decoration: none; border-radius: 4px; margin: 15px 0; }
+          .footer { text-align: center; padding: 20px; font-size: 12px; color: #666; }
+          .status { background-color: #fff3cd; padding: 10px; border-radius: 4px; margin: 10px 0; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <h1>📄 Invoice Generated</h1>
+          </div>
+          <div class="content">
+            <div class="status">
+              <strong>Action Required:</strong> Invoice has been automatically generated and sent to client.
+            </div>
+            <p>An invoice has been generated for a completed project.</p>
+            <div class="invoice-details">
+              <p><strong>Invoice Number:</strong> ${invoiceNumber}</p>
+              <p><strong>Client:</strong> ${clientName}</p>
+              ${projectName ? `<p><strong>Project:</strong> ${projectName}</p>` : ''}
+              <p><strong>Amount:</strong> ${formattedAmount}</p>
+              <p><strong>Due Date:</strong> ${formattedDueDate}</p>
+            </div>
+            ${pdfUrl ? `<a href="${appUrl}${pdfUrl}" class="button">View Invoice PDF</a>` : ""}
+            <p><strong>Next Steps:</strong></p>
+            <ul>
+              <li>Invoice has been sent to the client</li>
+              <li>Monitor payment status in CRM</li>
+              <li>Follow up before due date if necessary</li>
+            </ul>
+          </div>
+          <div class="footer">
+            <p>&copy; ${new Date().getFullYear()} Smith Marketing Agency - Admin Notification</p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `,
+  };
+}
+
 export function newClientTemplate({ clientName }) {
   return {
     subject: "Welcome to Smith Marketing Agency",
