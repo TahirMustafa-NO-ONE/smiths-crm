@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# invoices (PDFs should not be committed)
+/public/invoices/*.pdf

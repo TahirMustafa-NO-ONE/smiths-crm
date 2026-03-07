@@ -306,3 +306,86 @@ export function newProjectTemplate({ clientName, projectName }) {
     `,
   };
 }
+
+// Admin notification templates
+export function adminNewClientNotification({ clientName, clientEmail, tier, companyName }) {
+  return {
+    subject: `New Client Added - ${companyName || clientName}`,
+    html: `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <style>
+          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+          .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+          .header { background-color: #FF9800; color: white; padding: 20px; text-align: center; }
+          .content { padding: 20px; background-color: #f9f9f9; }
+          .details { background-color: white; padding: 15px; margin: 15px 0; border-left: 4px solid #FF9800; }
+          .footer { text-align: center; padding: 20px; font-size: 12px; color: #666; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <h1>🎉 New Client Added</h1>
+          </div>
+          <div class="content">
+            <p>A new client has been added to the CRM system.</p>
+            <div class="details">
+              <p><strong>Company Name:</strong> ${companyName || 'N/A'}</p>
+              <p><strong>Client Name:</strong> ${clientName}</p>
+              <p><strong>Email:</strong> ${clientEmail || 'N/A'}</p>
+              <p><strong>Tier:</strong> ${tier || 'N/A'}</p>
+            </div>
+            <p>The welcome email has been sent to the client.</p>
+          </div>
+          <div class="footer">
+            <p>&copy; ${new Date().getFullYear()} Smith Marketing Agency - Admin Notification</p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `,
+  };
+}
+
+export function adminNewProjectNotification({ clientName, projectName, projectBudget, projectStatus }) {
+  return {
+    subject: `New Project Created - ${projectName}`,
+    html: `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <style>
+          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+          .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+          .header { background-color: #3F51B5; color: white; padding: 20px; text-align: center; }
+          .content { padding: 20px; background-color: #f9f9f9; }
+          .details { background-color: white; padding: 15px; margin: 15px 0; border-left: 4px solid #3F51B5; }
+          .footer { text-align: center; padding: 20px; font-size: 12px; color: #666; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <h1>📋 New Project Created</h1>
+          </div>
+          <div class="content">
+            <p>A new project has been created in the CRM system.</p>
+            <div class="details">
+              <p><strong>Project Name:</strong> ${projectName}</p>
+              <p><strong>Client:</strong> ${clientName}</p>
+              <p><strong>Budget:</strong> ${projectBudget ? `$${projectBudget}` : 'N/A'}</p>
+              <p><strong>Status:</strong> ${projectStatus || 'Planning'}</p>
+            </div>
+            <p>The project notification email has been sent to the client.</p>
+          </div>
+          <div class="footer">
+            <p>&copy; ${new Date().getFullYear()} Smith Marketing Agency - Admin Notification</p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `,
+  };
+}

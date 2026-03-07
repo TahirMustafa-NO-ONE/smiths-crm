@@ -8,6 +8,8 @@ import {
   invoiceGeneratedTemplate,
   newClientTemplate,
   newProjectTemplate,
+  adminNewClientNotification,
+  adminNewProjectNotification,
 } from "../email/emailTemplates.js";
 import { generateInvoice } from "../invoice/generateInvoice.js";
 
@@ -146,11 +148,17 @@ export async function handleNewClient(client) {
 
     console.log("ADMIN_EMAIL from env:", process.env.ADMIN_EMAIL);
     if (process.env.ADMIN_EMAIL) {
-      console.log("Sending welcome email to admin:", process.env.ADMIN_EMAIL);
+      const adminEmailTemplate = adminNewClientNotification({
+        clientName,
+        clientEmail: client.email,
+        tier: client.tier,
+        companyName: client.companyName,
+      });
+      console.log("Sending admin notification for new client:", process.env.ADMIN_EMAIL);
       await sendEmail({
         to: process.env.ADMIN_EMAIL,
-        subject: emailTemplate.subject,
-        html: emailTemplate.html,
+        subject: adminEmailTemplate.subject,
+        html: adminEmailTemplate.html,
       });
     } else {
       console.log("ADMIN_EMAIL not set, skipping admin notification");
@@ -183,11 +191,17 @@ export async function handleNewProject(project, client) {
 
     console.log("ADMIN_EMAIL from env:", process.env.ADMIN_EMAIL);
     if (process.env.ADMIN_EMAIL) {
-      console.log("Sending new project email to admin:", process.env.ADMIN_EMAIL);
+      const adminEmailTemplate = adminNewProjectNotification({
+        clientName,
+        projectName: project.title,
+        projectBudget: project.budget,
+        projectStatus: project.status,
+      });
+      console.log("Sending admin notification for new project:", process.env.ADMIN_EMAIL);
       await sendEmail({
         to: process.env.ADMIN_EMAIL,
-        subject: emailTemplate.subject,
-        html: emailTemplate.html,
+        subject: adminEmailTemplate.subject,
+        html: adminEmailTemplate.html,
       });
     } else {
       console.log("ADMIN_EMAIL not set, skipping admin notification");
