@@ -2,7 +2,7 @@
 
 ## Prerequisites
 - Dev server running: `pnpm dev`
-- Admin email set in .env.local: `tahirmustafa12516@gmail.com`
+- Admin email set in .env.local: `*****************@gmail.com`
 - Resend API key configured
 - Logged in as admin user
 
@@ -138,7 +138,7 @@
 ## Checking Emails
 
 ### Option 1: Check Real Inbox
-- Check `tahirmustafa12516@gmail.com` for all admin notifications
+- Check `****************@gmail.com` for all admin notifications
 - Check any client/team member emails you used during testing
 
 ### Option 2: Check Resend Dashboard
