@@ -31,7 +31,7 @@ Your existing dummy data clients probably don't have email addresses. You have 3
 4. Edit each client document and add:
    ```json
    {
-     "email": "tahirmustafa12516@gmail.com",
+     "email": "****************6@gmail.com",
      "name": "Test Contact"
    }
    ```
@@ -40,7 +40,7 @@ Your existing dummy data clients probably don't have email addresses. You have 3
 1. Go to `http://localhost:3000/clients`
 2. Click on each client
 3. Click "Edit"
-4. Add email: `tahirmustafa12516@gmail.com`
+4. Add email: `***************@gmail.com`
 5. Add contact name: "Test Contact"
 6. Save
 
@@ -120,7 +120,7 @@ Before testing automation:
 - [ ] At least one project linked to a client with email
 - [ ] Project has a budget > 0
 - [ ] Dev server running (`pnpm dev`)
-- [ ] ADMIN_EMAIL set in .env.local: `tahirmustafa12516@gmail.com`
+- [ ] ADMIN_EMAIL set in .env.local: `**************@gmail.com`
 - [ ] RESEND_API_KEY configured
 - [ ] Logged in as admin user
 
