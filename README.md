@@ -87,7 +87,16 @@ smiths-crm/
 │
 ├── 🛠️ utils/                   # Utility functions
 │   ├── connectDB.js           # MongoDB connection utility
-│   └── seedAdmin.js           # Admin user seeding script
+│   ├── seedAdmin.js           # Admin user seeding script
+│   ├── 📧 email/              # Email system
+│   │   ├── sendEmail.js       # Email sending utility with rate limiting
+│   │   └── emailTemplates.js  # HTML email templates
+│   ├── 🤖 automation/         # Business logic automation
+│   │   └── automationService.js # Email triggers & workflows
+│   ├── 📄 invoice/            # Invoice generation
+│   │   ├── generateInvoice.js # Invoice data processing
+│   │   └── generateInvoicePDF.js # PDF creation
+│   └── 📧 email/              # Email system (duplicate - will be cleaned up)
 │
 ├── 🖼️ public/                  # Static assets
 ├── ⚙️ Config files
@@ -156,6 +165,14 @@ MONGODB_URI=mongodb://localhost:27017/smiths-crm
 # NextAuth Configuration
 NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_SECRET=your-super-secret-key-change-this
+
+# Email Configuration (Resend)
+RESEND_API_KEY=your-resend-api-key
+EMAIL_FROM=onboarding@resend.dev
+ADMIN_EMAIL=admin@smithsagency.com
+
+# Application URL (for email links)
+APP_URL=http://localhost:3000
 
 # Optional: Additional Configuration
 NODE_ENV=development
@@ -253,6 +270,28 @@ Ready to deploy to production?
 
 </td>
 </tr>
+<tr>
+<td width="50%">
+
+### 📧 Email Automation
+- 🎉 **Welcome Emails** - Automatic client onboarding
+- 📋 **Project Notifications** - Status updates & completions
+- 📄 **Invoice Generation** - PDF creation & delivery
+- 👑 **Admin Notifications** - Internal alerts & updates
+- ⚡ **Smart Templates** - Different content for clients vs admins
+
+</td>
+<td width="50%">
+
+### 🔄 Automation Features
+- 📧 **Resend Integration** - Professional email delivery
+- ⏱️ **Rate Limiting** - Optimized email sending
+- 📊 **Invoice Management** - Automatic PDF generation
+- 🎯 **Status Triggers** - Event-driven notifications
+- 🔒 **Secure Delivery** - Encrypted email transmission
+
+</td>
+</tr>
 </table>
 
 ### 🎨 User Experience Highlights
@@ -282,6 +321,8 @@ Ready to deploy to production?
 | 🦫 **Mongoose** | ODM | 6.9.0 |
 | 🔐 **bcryptjs** | Password Hashing | 3.0.3 |
 | ⏰ **Moment.js** | Date Management | 2.29.4 |
+| 📧 **Resend** | Email Service | 3.2.0 |
+| 📄 **jsPDF** | PDF Generation | 2.5.1 |
 
 ### Development Tools
 | Tool | Purpose |
@@ -319,23 +360,51 @@ Ready to deploy to production?
 
 </details>
 
-## 🔐 Authentication & Security
+## � Email Automation System
 
-The application implements enterprise-grade security:
+The CRM includes a comprehensive email automation system that sends targeted notifications to both clients and administrators.
 
-```javascript
-// NextAuth.js with Credentials Provider
-🔑 Session-based authentication
-👥 Role-based access control (RBAC)
-🔒 Bcrypt password hashing
-🛡️ Protected API routes
-🚪 Automatic route guards
+### 🎯 Automated Triggers
+
+| Event | Client Email | Admin Email |
+|-------|-------------|-------------|
+| **New Client** | 🎉 Welcome message | 👥 Client details & onboarding info |
+| **New Project** | 📋 Project confirmation | 📋 Project details & budget info |
+| **Project Status** | ✅ Status updates | 📊 Internal project tracking |
+| **Project Complete** | 📄 Invoice delivery | 📄 Invoice notification & next steps |
+
+### 📧 Email Templates
+
+**Client Templates:**
+- Welcome email with company branding
+- Project notifications with clear status updates
+- Invoice delivery with PDF download links
+- Professional, customer-friendly design
+
+**Admin Templates:**
+- New client alerts with full contact details
+- Project creation notifications with budget info
+- Invoice generation alerts with action items
+- Internal operations-focused content
+
+### ⚙️ Configuration
+
+**Required Environment Variables:**
+```env
+RESEND_API_KEY=your-resend-api-key-here
+EMAIL_FROM=onboarding@resend.dev
+ADMIN_EMAIL=admin@smithsagency.com
+APP_URL=https://your-domain.com
 ```
 
-**Access Levels:**
-- 👑 **Admin** - Full system access, user management, all CRUD operations
-- 👤 **User** - Limited access (configurable per module)
-- 🚫 **Guest** - Redirected to login page
+**Rate Limiting:** Automatic 600ms delays between emails to prevent API limits.
+
+### 🔄 Workflow Example
+
+1. **Client signs up** → Welcome email sent to client + admin notification
+2. **Project created** → Confirmation to client + details to admin
+3. **Project completed** → Invoice generated + sent to both parties
+4. **All emails** → Professional HTML templates with responsive design
 
 ## 📌 Important Notes
 
@@ -381,9 +450,39 @@ The application implements enterprise-grade security:
 ## 🧹 Recent Updates
 
 <details>
-<summary><b>✨ What's New (February 2026)</b></summary>
+<summary><b>✨ What's New (March 2026)</b></summary>
 
 <br>
+
+### 🚀 Email Automation System
+
+- 📧 **Complete Email Integration** - Resend API integration for professional email delivery
+- 🎯 **Smart Templates** - Separate email templates for clients vs administrators
+- 📄 **Invoice Automation** - Automatic PDF generation and email delivery on project completion
+- 👑 **Admin Notifications** - Internal alerts for new clients, projects, and invoices
+- ⚡ **Rate Limiting** - Optimized email sending with 600ms delays to prevent API limits
+- 🎨 **Rich HTML Templates** - Professional, branded email designs with responsive layouts
+
+### 📧 Email Features
+
+**Client-Facing Emails:**
+- 🎉 Welcome emails for new client onboarding
+- 📋 Project creation confirmations
+- 📄 Invoice delivery with PDF download links
+- ✅ Project status updates (in-progress, completed, cancelled)
+
+**Admin Notifications:**
+- 👥 New client alerts with full details (company, tier, contact info)
+- 📋 New project notifications with budget and status
+- 📄 Invoice generation alerts with client details and next steps
+- 🎯 Action-oriented content for internal operations
+
+### 🔧 Technical Improvements
+
+- 🛡️ **Error Handling** - Robust email sending with proper error propagation
+- ⏱️ **Rate Limit Management** - Automatic delays between email sends
+- 📁 **File Organization** - Invoice PDFs excluded from git tracking
+- 🔒 **Security** - Environment variable configuration for production deployment
 
 ### Cleanup & Reorganization
 
